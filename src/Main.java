@@ -6,7 +6,6 @@ public class Main extends PApplet{
 
 	
 	private Logica log;
-	private Comclient cc;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PApplet.main("Main");
@@ -22,7 +21,6 @@ public class Main extends PApplet{
 	public void setup() {
 		// TODO Auto-generated method stub
 		log = new Logica(this);
-		cc = new Comclient();
 		try {
 			System.out.println(InetAddress.getLocalHost());
 			} catch (Exception e) {
@@ -35,6 +33,7 @@ public class Main extends PApplet{
 		// TODO Auto-generated method stub
 		background(255);
 		log.pintar();
+		log.mover();
 	}
 	
 }

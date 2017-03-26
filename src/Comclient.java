@@ -18,7 +18,7 @@ public class Comclient extends Observable implements Runnable {
 
 		online = true;
 		try {
-			s = new Socket(InetAddress.getByName("192.168.108.15"), Puerto);
+			s = new Socket(InetAddress.getByName("192.168.1.52"), Puerto);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,6 +29,7 @@ public class Comclient extends Observable implements Runnable {
 		try {
 			DataInputStream entrada = new DataInputStream(new BufferedInputStream(s.getInputStream()));
 			entrada.readInt();
+			System.out.println(entrada.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +46,16 @@ public class Comclient extends Observable implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (online) {
-			recibir();
+			try {
+				recibir();
+				setChanged();
+				notifyObservers();
+				clearChanged();
+				enviar();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			System.out.println("RECIBIENDO");
 		}
 	}
 }

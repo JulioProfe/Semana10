@@ -21,7 +21,7 @@ public class Comserver extends Observable implements Runnable {
 			ss = new ServerSocket(Puerto);
 			s = null;
 			online = true;
-			System.out.println("server pro" + online);
+			System.out.println("server pro: " + online);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,30 +37,32 @@ public class Comserver extends Observable implements Runnable {
 				if (s == null) {
 					s = ss.accept();
 					enviar();
-					System.out.println("Corriendo");
+					System.out.println("ENVIANDO");
+					recibir();
+					//System.out.println("RECIBIENDO");
 				}
-				recibir();
+	
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	private void enviar() throws IOException{
+
+	private void enviar() throws IOException {
 		DataOutputStream salida = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
-		salida.writeInt((int) (Math.random()*10));
+		salida.writeInt(50);
 		salida.flush();
 	}
-	
-	private void recibir(){
+
+	private void recibir() {
 		try {
 			DataInputStream entrada = new DataInputStream(new BufferedInputStream(s.getInputStream()));
 			llego = (String) entrada.readUTF();
 			if (llego instanceof String) {
 				llego.contains("llego");
 				enviar();
-			}	
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
