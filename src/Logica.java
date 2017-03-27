@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,11 +24,6 @@ public class Logica implements Observer {
 		// TODO Auto-generated method stub
 		y = (int) arg;
 		System.out.println(y);
-		if (arg instanceof String) {
-			if (((String) arg).contains("llego")) {
-				x = 20;
-			}
-		}
 	}
 
 	public void pintar() {
@@ -38,9 +34,23 @@ public class Logica implements Observer {
 	public void mover(){
 		x ++;
 		if (x >= app.width) {
-			x = 20;
+			try {
+				cc.enviarLlego();
+				setY(y);
+				x = 20;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getY() {
+		return y;
+	}
 
 }

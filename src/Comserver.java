@@ -37,7 +37,6 @@ public class Comserver extends Observable implements Runnable {
 				if (s == null) {
 					s = ss.accept();
 					enviar();
-					System.out.println("ENVIANDO");
 					recibir();
 					//System.out.println("RECIBIENDO");
 				}
@@ -51,8 +50,10 @@ public class Comserver extends Observable implements Runnable {
 
 	private void enviar() throws IOException {
 		DataOutputStream salida = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
-		salida.writeInt(50);
+		int randoms = (int) (Math.random()*300);
+		salida.writeInt(randoms);
 		salida.flush();
+		System.out.println("ENVIANDO: " + randoms);
 	}
 
 	private void recibir() {

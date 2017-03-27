@@ -18,28 +18,33 @@ public class Comclient extends Observable implements Runnable {
 
 		online = true;
 		try {
-			s = new Socket(InetAddress.getByName("192.168.1.52"), Puerto);
+			s = new Socket(InetAddress.getByName("192.168.112.7"), Puerto);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void recibir() {
+	private int recibir() {
 		try {
 			DataInputStream entrada = new DataInputStream(new BufferedInputStream(s.getInputStream()));
-			entrada.readInt();
-			System.out.println(entrada.toString());
+			int recibidito = entrada.readInt();
+			System.out.println("RECIBIDITO: " + recibidito);
+			return recibidito;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
+
 	}
 
-	private void enviar() throws IOException {
+	public void enviarLlego() throws IOException {
 		DataOutputStream salida = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
-		salida.writeUTF("llego");
+		String yupi = "llego";
+		salida.writeUTF(yupi);
 		salida.flush();
+		System.out.println("ENVIANDITO: " + yupi);
 	}
 
 	@Override
@@ -47,15 +52,15 @@ public class Comclient extends Observable implements Runnable {
 		// TODO Auto-generated method stub
 		while (online) {
 			try {
-				recibir();
+				int recibido = recibir();
 				setChanged();
-				notifyObservers();
+				notifyObservers(recibido);
 				clearChanged();
-				enviar();
+				System.out.println("RECIBIENDO: " + recibido);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			System.out.println("RECIBIENDO");
+			
 		}
 	}
 }
